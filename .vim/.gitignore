@@ -1,0 +1,6 @@
+# Ignore pathogen
+autoload/
+# Ignore plugins
+bundle/
+.netrwhist
+
