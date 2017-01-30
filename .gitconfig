@@ -1,0 +1,19 @@
+[user]
+  email = pavlin.g.p@gmail.com
+  name = Pavlin Poličar
+  signingkey = 17C5B4F89E6C3C6A367C81D49BA3ADEE685452EF
+[core]
+  autocrlf = input
+[alias]
+  lol = log --graph --oneline --decorate --all
+  c = commit
+  cm = commit -m
+  diffs = diff --staged
+  a = add -p
+  s = status
+[credential "https://github.com"]
+  username = pavlin.g.p@gmail.com
+[credential "https://bitbucket.org"]
+  username = pavlin.g.p@gmail.com
+[diff]
+  compactionHeuristic = true
