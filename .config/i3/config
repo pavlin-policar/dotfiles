@@ -1,0 +1,305 @@
+
+# i3 configuration file
+# Author: Pavlin Poličar <pavlin.g.p@gmail.com>
+
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $up k
+set $down j
+set $left h
+set $right l
+
+# set mod key
+# Alt key     -> Mod1
+# Windows key -> Mod4
+set $mod Mod4
+
+# font for window titles
+font pango:Source Code Pro, Awesome 9
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec termite
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start rofi
+bindsym $mod+d exec --no-startup-id rofi -show run -fullscreen
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# split in horizontal orientation
+bindsym $mod+b split h
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+# vars for workspace names
+set $ws1 "1:    "
+set $ws2 "2:    "
+set $ws3 "3:    "
+set $ws4 "4:    "
+set $ws5 "5:    "
+set $ws6 "6:    "
+set $ws7 "7:    "
+set $ws8 "8:    "
+set $ws9 "9:    "
+set $ws10 "10:    "
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# Custom binds
+#bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
+bindsym Print exec gyazo
+
+# resize window (you can also use the mouse for that)
+set $resize "  "
+mode $resize {
+  # These bindings trigger as soon as you enter the resize mode
+
+  # Pressing left will shrink the window’s width.
+  # Pressing right will grow the window’s width.
+  # Pressing up will shrink the window’s height.
+  # Pressing down will grow the window’s height.
+  bindsym $left       resize shrink width 10 px or 10 ppt
+  bindsym $down       resize grow height 10 px or 10 ppt
+  bindsym $up         resize shrink height 10 px or 10 ppt
+  bindsym $right      resize grow width 10 px or 10 ppt
+
+  # same bindings, but for the arrow keys
+  bindsym Left        resize shrink width 10 px or 10 ppt
+  bindsym Down        resize grow height 10 px or 10 ppt
+  bindsym Up          resize shrink height 10 px or 10 ppt
+  bindsym Right       resize grow width 10 px or 10 ppt
+
+  # back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+r mode $resize
+
+set $volumeMode "  "
+mode $volumeMode {
+  bindsym 1 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 10% unmute", mode "default"
+  bindsym 2 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 20% unmute", mode "default"
+  bindsym 3 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 30% unmute", mode "default"
+  bindsym 4 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 40% unmute", mode "default"
+  bindsym 5 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 50% unmute", mode "default"
+  bindsym 6 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 60% unmute", mode "default"
+  bindsym 7 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 70% unmute", mode "default"
+  bindsym 8 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 80% unmute", mode "default"
+  bindsym 9 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 90% unmute", mode "default"
+  bindsym 0 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 100% unmute", mode "default"
+
+  bindsym m exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master mute", mode "default"
+
+  bindsym Escape mode "default"
+}
+bindsym $mod+y mode $volumeMode
+
+set $shutdownMod "System Shift+(P)owerOff, Shift+(R)estart, (H)ibernate, (S)leep, (L)ock, (E)xit ~ (C) reload wm, (V) restart wm"
+mode $shutdownMod {
+  bindsym c reload, mode "default"
+  bindsym v restart, mode "default"
+
+  bindsym l exec --no-startup-id $HOME/.bin/i3exit lock, mode "default"
+  bindsym e exec --no-startup-id $HOME/.bin/i3exit logout, mode "default"
+  bindsym s exec --no-startup-id $HOME/.bin/i3exit suspend, mode "default"
+  bindsym h exec --no-startup-id $HOME/.bin/i3exit hibernate, mode "default"
+  bindsym Shift+r exec --no-startup-id $HOME/.bin/i3exit reboot, mode "default"
+  bindsym Shift+p exec --no-startup-id $HOME/.bin/i3exit shutdown, mode "default"
+
+  bindsym Escape mode "default"
+}
+bindsym $mod+Shift+e mode $shutdownMod
+
+# COLORS
+# Since recursive variables are not supported in the i3 config, we'll keep the
+# used colors here for reference
+#
+# Text color (for the i3 bar and icons)
+# #aaaaaa
+#
+# Dark grey (for i3 bar background color)
+# #272727
+#
+# Medium grey (for i3 bar active workspaces)
+# #333333
+#
+# Medium grey (for i3 bar active workspaces)
+# #393939
+#
+# Red (for alerts)
+# #FF5959
+#
+# Blue (as a main color)
+# #2b63cc
+
+# Bar colors
+set $color_text #aaaaaa
+set $color_bar_background #1d1d1d
+set $window_blue #2B63CC
+
+# General window background (if not overriden)
+set $color_background #272727
+# General window text foreground (if not overriden)
+set $color_inactive #aaaaaa
+# Urgent color for window borders
+set $color_urgent #FF5959
+# Main color
+set $color_main #2b63cc
+
+# window border colors
+# class                 Border    Background          Foreground        Indicator
+client.focused          #000000   $color_main        $color_inactive   $color_main
+client.focused_inactive #000000   #555555   $color_inactive   $color_background
+client.unfocused        #000000   #444444   $color_inactive   $color_background
+client.urgent           #000000   $color_urgent       $color_inactive   $color_urgent
+
+set $ws_background #1d1d1d
+set $ws_background_active #393939
+set $ws_background_urgent #FF5983
+set $ws_text_color #aaaaaa
+
+bar {
+  position top
+  # Enable transparency on i3bar
+  i3bar_command i3bar
+  status_command i3blocks -c ~/.config/i3/i3blocks.conf
+  # Don't display the numbers in front of the text describing the workspace
+  strip_workspace_numbers yes
+  font pango:Source Code Pro, Awesome 9
+
+  height 28
+
+  tray_padding 6
+
+  colors {
+    # bar background color
+    background $color_bar_background
+    # bar text color
+    statusline $color_text
+
+    #                   Border          Background            Foreground
+    # currently focused workspace
+    focused_workspace   $ws_background  $ws_background_active $ws_text_color
+    # when workspace is active on some output but the focus is elsewhere
+    active_workspace    $ws_background  $ws_background        $ws_text_color
+    inactive_workspace  $ws_background  $ws_background        $ws_text_color
+    urgent_workspace    $ws_background  $ws_background        $ws_background_urgent
+  }
+}
+
+# Borders
+new_window pixel 4
+new_float pixel 4
+hide_edge_borders both
+
+# disable mouse movement switching window focus
+focus_follows_mouse no
+
+# Gaps
+# gaps inner 15
+# gaps outer 5
+
+# Workspace auto back and forth allows me to return to the previous workspace by
+# clicking the same ws number again
+# workspace_auto_back_and_forth yes
+
+# Volume keys
+bindsym XF86AudioRaiseVolume exec "pkill -RTMIN+1 i3blocks; amixer -D pulse sset Master 1%+ unmute"
+bindsym XF86AudioLowerVolume exec "pkill -RTMIN+1 i3blocks; amixer -D pulse sset Master 1%- unmute"
+
+# Brightness keys
+bindsym XF86MonBrightnessUp exec "pkill -RTMIN+2 i3blocks; xbacklight -inc 10"
+bindsym XF86MonBrightnessDown exec "pkill -RTMIN+2 i3blocks; xbacklight -dec 10"
+
+# Assign programs to specific workspaces
+assign [class="(?i)chromium"] $ws1
+assign [class="(?i)PhpStorm"] $ws3
+assign [class="(?i)PyCharm"] $ws3
+assign [class="(?i)jetbrains\-idea"] $ws3
+assign [class="atom"] $ws3
+assign [class="(?i)thunar"] $ws5
+assign [class="(?i)skype"] $ws8
+assign [class="(?i)transmission\-gtk"] $ws9
+assign [class="(?i)Vlc"] $ws10
+
+# Splash screens should not have a border around them and should be floating
+for_window [window_type="splash"] floating enable border none
+
+# Spotify violates some specs on startup, so we have to move it instead of assigning a ws to it
+for_window [class="(?i)spotify"] move window to workspace $ws10
+
+# Expand the skype chat window further out to shrink the contact list
+for_window [class="(?i)skype" window_role="ConversationsWindow"] resize grow left 20 px or 20 ppt
+
+for_window [class="Orange Canvas"] floating enable
+
+
+# i3blocks termite update script
+for_window [class="Update"] floating enable, resize set 840 420, move absolute position 980 px 100 px
+
+# Signal to the systemd that i3 has started up
+exec --no-startup-id systemctl --user start i3.target
+
+# Autostart
+exec --no-startup-id udiskie --tray

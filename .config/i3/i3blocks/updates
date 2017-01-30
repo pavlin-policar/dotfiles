@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# The case block must be in front of the checkupdates since that takes time
+case $BLOCK_BUTTON in
+  1) termite --class=Update --exec "zsh -c \"yaourt -Syu --aur\"" ;;
+esac
+
+UPDATES=$(checkupdates | wc -l)
+[[ "$UPDATES" = "0" ]] && exit 0
+
+echo " $UPDATES"
+echo " $UPDATES"
+echo "#4586FF"
