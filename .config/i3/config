@@ -300,6 +300,3 @@ for_window [class="Update"] floating enable, resize set 840 420, move absolute p
 
 # Signal to the systemd that i3 has started up
 exec --no-startup-id systemctl --user start i3.target
-
-# Autostart
-exec --no-startup-id udiskie --tray
