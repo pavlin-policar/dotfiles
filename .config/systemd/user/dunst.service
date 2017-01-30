@@ -1,0 +1,9 @@
+[Unit]
+Description=Dunst notification manager
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/dunst -config /home/pavlin/.config/i3/dunstrc
+
+[Install]
+WantedBy=i3.target

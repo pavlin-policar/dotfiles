@@ -1,0 +1,9 @@
+[Unit]
+Description=Unclutter
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/unclutter
+
+[Install]
+WantedBy=i3.target

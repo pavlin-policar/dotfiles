@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for wallpaper service
+
+[Timer]
+OnBootSec=0s
+OnUnitActiveSec=15m
+Unit=wallpaper.service
+
+[Install]
+WantedBy=i3.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Compton composite manager
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/compton --config /home/pavlin/.config/i3/compton.conf
+
+[Install]
+WantedBy=i3.target
