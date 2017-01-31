@@ -8,13 +8,18 @@ case $BLOCK_BUTTON in
   1) i3-msg "exec chromium --new-tab www.gmail.com ; workspace 1:    " &>/dev/null ;;
 esac
 
-RESPONSE=$(curl -u "$USERNAME":"$PASSWORD" --silent "https://mail.google.com/mail/feed/atom")
-# If no connection, don't display anything
-[[ $? -ne 0 ]] && exit 0
+RESPONSE=$(curl -u "$USERNAME":"$PASSWORD" -s -i "https://mail.google.com/mail/feed/atom")
 
-COUNT=$(echo $RESPONSE |  grep -oPm1 "(?<=<fullcount>)[^<]+")
+# If the response was not okay, due to connectivity or anything else, exit
+if [ $(echo $RESPONSE | grep 'HTTP' | cut -d" " -f2) != "200" ]; then
+  exit 0
+fi
 
-[[ "$COUNT" = "0" ]] && exit 0
+COUNT=$(echo $RESPONSE | grep -oPm1 "(?<=<fullcount>)[^<]+")
+
+if [ "$COUNT" == "0" ]; then
+  exit 0
+fi
 
 echo " $COUNT"
 echo " $COUNT"
