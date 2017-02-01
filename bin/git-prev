@@ -1,0 +1,18 @@
+#!/bin/bash
+
+source _git_base
+
+fail_if_not_git
+
+# Store the last known branch name to enable forward scrolling
+CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+
+if ! echo $CURRENT_BRANCH | grep -q "HEAD"; then
+  echo $CURRENT_BRANCH > "`get_tmp_file`-last-branch"
+fi
+
+# Check if the number of commits to move was passed, otherwise assume 1
+[ $# -ne "0" ] && NUM="$1" || NUM="1"
+
+git checkout HEAD~"$NUM"
+

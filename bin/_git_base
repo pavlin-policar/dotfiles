@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# A collection of useful commands to help share code between git scripts
+
+# Check if we're inside a git repo and fail with a nice error message if not
+function fail_if_not_git {
+  git rev-parse --is-inside-work-tree &>/dev/null
+  if ! [ "$?" = "0" ]; then
+    echo "Error! Not inside a git repository" >&2
+    exit 1
+  fi
+}
+
+# Get a tmp file name for the current git repo
+function get_tmp_file {
+  PROJECT="`pwd | tr / -`"
+  echo "/tmp/git-base-${PROJECT:1}"
+}
+
+

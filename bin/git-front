@@ -1,0 +1,15 @@
+#!/bin/bash
+
+source _git_base
+
+fail_if_not_git
+
+TMP_FILE="`get_tmp_file`-last-branch"
+
+# Fail if the file containg the last known branch does not exist
+if ! [ -f "$TMP_FILE" ]; then
+  echo "Error! Last known branch not found. Please use git checkout instead" >&2
+  exit 1
+fi
+
+git checkout `cat "$TMP_FILE"`
