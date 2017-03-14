@@ -269,8 +269,8 @@ bindsym XF86AudioRaiseVolume exec "pkill -RTMIN+1 i3blocks; amixer -D pulse sset
 bindsym XF86AudioLowerVolume exec "pkill -RTMIN+1 i3blocks; amixer -D pulse sset Master 1%- unmute"
 
 # Brightness keys
-bindsym XF86MonBrightnessUp exec "pkill -RTMIN+2 i3blocks; xbacklight -inc 10"
-bindsym XF86MonBrightnessDown exec "pkill -RTMIN+2 i3blocks; xbacklight -dec 10"
+bindsym XF86MonBrightnessUp exec "pkill -RTMIN+2 i3blocks; light -A 10"
+bindsym XF86MonBrightnessDown exec "pkill -RTMIN+2 i3blocks; light -U 10"
 
 # Assign programs to specific workspaces
 assign [class="(?i)chromium"] $ws1
