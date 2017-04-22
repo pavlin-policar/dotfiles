@@ -283,6 +283,7 @@ assign [class="(?i)skype"] $ws8
 assign [class="(?i)transmission\-gtk"] $ws9
 assign [class="(?i)Vlc"] $ws10
 assign [class="(?i)slack"] $ws8
+assign [class="(?i)nylas mail"] $ws7
 
 # Splash screens should not have a border around them and should be floating
 for_window [window_type="splash"] floating enable border none
