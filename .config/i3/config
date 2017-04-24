@@ -295,6 +295,7 @@ for_window [class="(?i)spotify"] move window to workspace $ws10
 for_window [class="(?i)skype" window_role="ConversationsWindow"] resize grow left 20 px or 20 ppt
 
 for_window [class="Orange Canvas"] floating enable
+for_window [class="Tk"] floating enable
 
 
 # i3blocks termite update script
