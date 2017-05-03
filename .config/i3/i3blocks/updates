@@ -2,10 +2,12 @@
 
 # The case block must be in front of the checkupdates since that takes time
 case $BLOCK_BUTTON in
-  1) termite --class=Update --exec "zsh -c \"yaourt -Syu --aur\"" ;;
+  1) termite --class=Update --exec "zsh -c \"pacaur -Syu\"" ;;
 esac
 
-UPDATES=$(checkupdates | wc -l)
+# Prefer pacaur over checkupdates since pacaur also lists outdated packages in
+# the aur, unlike checkupdates.
+UPDATES=$(pacaur -k | wc -l)
 [[ "$UPDATES" = "0" ]] && exit 0
 
 echo " $UPDATES"
