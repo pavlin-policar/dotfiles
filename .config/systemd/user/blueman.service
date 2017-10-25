@@ -1,0 +1,8 @@
+[Unit]
+Description=Blueman bluetooth manager
+
+[Service]
+ExecStart=/usr/bin/blueman-applet
+
+[Install]
+WantedBy=i3.target
