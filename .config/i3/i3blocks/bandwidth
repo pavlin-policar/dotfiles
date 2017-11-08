@@ -72,9 +72,9 @@ tx_rate=$(( $tx_diff / $time_diff ))
 # incoming
 rx_kib=$(( $rx_rate >> 10 ))
 if [[ "$rx_rate" -gt 1048576 ]]; then
-  printf '%4sM' "`echo "scale=1; $rx_kib / 1024" | bc`"
+  printf '%3sM' "`echo "scale=1; $rx_kib / 1024" | bc`"
 else
-  printf '%4dK' "$rx_kib"
+  printf '%3dK' "$rx_kib"
 fi
 echo -n "   "
 
