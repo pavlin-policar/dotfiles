@@ -5,7 +5,7 @@ IgnoreOnIsolate=true
 [Service]
 Type=forking
 Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
-ExecStart=/usr/bin/ssh-agent -a $SSH_AUTH_SOCK
+ExecStart=/usr/bin/ssh-agent -a $SSH_AUTH_SOCK -t 3h
 
 [Install]
 WantedBy=default.target
