@@ -297,6 +297,7 @@ for_window [class="(?i)skype" window_role="ConversationsWindow"] resize grow lef
 for_window [class="Orange Canvas"] floating enable
 for_window [class="\.py"] floating enable
 for_window [class="Tk"] floating enable
+for_window [class="octave" title="^Figure"] floating enable
 
 
 # i3blocks termite update script
