@@ -281,7 +281,6 @@ assign [class="atom"] $ws3
 assign [class="(?i)thunar"] $ws5
 assign [class="(?i)skype"] $ws8
 assign [class="(?i)transmission\-gtk"] $ws9
-assign [class="(?i)Vlc"] $ws10
 assign [class="(?i)slack"] $ws8
 assign [class="(?i)nylas mail"] $ws7
 
