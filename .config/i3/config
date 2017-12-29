@@ -158,12 +158,12 @@ mode $shutdownMod {
   bindsym c reload, mode "default"
   bindsym v restart, mode "default"
 
-  bindsym l exec --no-startup-id $HOME/.bin/i3exit lock, mode "default"
-  bindsym e exec --no-startup-id $HOME/.bin/i3exit logout, mode "default"
-  bindsym s exec --no-startup-id $HOME/.bin/i3exit suspend, mode "default"
-  bindsym h exec --no-startup-id $HOME/.bin/i3exit hibernate, mode "default"
-  bindsym Shift+r exec --no-startup-id $HOME/.bin/i3exit reboot, mode "default"
-  bindsym Shift+p exec --no-startup-id $HOME/.bin/i3exit shutdown, mode "default"
+  bindsym l exec --no-startup-id $HOME/dotfiles/bin/i3exit lock, mode "default"
+  bindsym e exec --no-startup-id $HOME/dotfiles/bin/i3exit logout, mode "default"
+  bindsym s exec --no-startup-id $HOME/dotfiles/bin/i3exit suspend, mode "default"
+  bindsym h exec --no-startup-id $HOME/dotfiles/bin/i3exit hibernate, mode "default"
+  bindsym Shift+r exec --no-startup-id $HOME/dotfiles/bin/i3exit reboot, mode "default"
+  bindsym Shift+p exec --no-startup-id $HOME/dotfiles/bin/i3exit shutdown, mode "default"
 
   bindsym Escape mode "default"
 }

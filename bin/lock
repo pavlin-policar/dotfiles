@@ -1,0 +1,41 @@
+#!/bin/bash
+
+i3lock \
+  -i /home/pavlin/dotfiles/pictures/lockscreen.png \
+  \
+  --timestr="%H:%M" \
+  --timefont="Operator Mono Light" \
+  --timesize="48" \
+  --time-align="1" \
+  --timecolor="ffffffff" \
+  --datestr "%A, %d %B %Y" \
+  --datefont="Operator Mono Light" \
+  --datesize="32" \
+  --date-align="1" \
+  --datecolor="ffffff99" \
+  \
+  --timepos="ix-480:iy-110" \
+  --datepos="tx:ty+50" \
+  \
+  --insidecolor=00000000	\
+  --insidevercolor=00000000 \
+  --insidewrongcolor=00000000 \
+  --ringcolor=ffffffff 	\
+  --ringvercolor=ffffffff \
+  --ringwrongcolor=ffffffff \
+  --separatorcolor=00000000 \
+  \
+  --keyhlcolor=4586FFff \
+  --bshlcolor=E04848ff \
+  \
+  --indpos="x+600:h-150" \
+  --radius=25 \
+  --ring-width=6 \
+  \
+  --clock \
+  --indicator \
+  --line-uses-inside \
+  --veriftext="" \
+  --wrongtext="" \
+  --textcolor="ffffffff" \
+  --ignore-empty-password
