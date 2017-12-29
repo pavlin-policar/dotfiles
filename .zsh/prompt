@@ -1,0 +1,123 @@
+#
+# The elegant prompt that contains relevant information.
+#
+
+#
+# 16 Terminal Colors
+# -- ---------------
+#  0 black
+#  1 red
+#  2 green
+#  3 yellow
+#  4 blue
+#  5 magenta
+#  6 cyan
+#  7 white
+#  8 bright black
+#  9 bright red
+# 10 bright green
+# 11 bright yellow
+# 12 bright blue
+# 13 bright magenta
+# 14 bright cyan
+# 15 bright white
+#
+
+# turns seconds into human readable time
+# 165392 => 1d 21h 56m 32s
+# https://github.com/sindresorhus/pretty-time-zsh
+prompt_human_time_to_var() {
+  local human=" " total_seconds=$1 var=$2
+  local days=$(( total_seconds / 60 / 60 / 24 ))
+  local hours=$(( total_seconds / 60 / 60 % 24 ))
+  local minutes=$(( total_seconds / 60 % 60 ))
+  local seconds=$(( total_seconds % 60 ))
+  (( days > 0 )) && human+="${days}d "
+  (( hours > 0 )) && human+="${hours}h "
+  (( minutes > 0 )) && human+="${minutes}m "
+  human+="${seconds}s"
+
+  # store human readable time in variable as specified by caller
+  typeset -g "${var}"="${human}"
+}
+
+prompt_precmd() {
+  # check for git arrows
+  prompt_check_git_arrows
+
+  # get the vcs info
+  vcs_info
+}
+
+# git push / pull arrows
+prompt_check_git_arrows() {
+  # reset git arrows
+  prompt_pure_git_arrows=
+
+  # check if there is an upstream configured for this branch
+  command git rev-parse --abbrev-ref @'{u}' &>/dev/null || return
+
+  local arrow_status
+  # check git left and right arrow_status
+  arrow_status="$(command git rev-list --left-right --count HEAD...@'{u}' 2>/dev/null)"
+  # exit if the command failed
+  (( !$? )) || return
+
+  # left and right are tab-separated, split on tab and store as array
+  arrow_status=(${(ps:\t:)arrow_status})
+  local arrows left=${arrow_status[1]} right=${arrow_status[2]}
+
+  (( ${right:-0} > 0 )) && arrows+="${GIT_DOWN_ARROW:-⇣}"
+  (( ${left:-0} > 0 )) && arrows+="${GIT_UP_ARROW:-⇡}"
+
+  [[ -n $arrows ]] && prompt_pure_git_arrows=" ${arrows}"
+}
+
+# fastest possible way to check if repo is dirty
+prompt_async_git_dirty() {
+  local untracked_dirty=$1; shift
+
+  # use cd -q to avoid side effects of changing directory, e.g. chpwd hooks
+  builtin cd -q "$*"
+
+  if [[ "$untracked_dirty" == "0" ]]; then
+    command git diff --no-ext-diff --quiet --exit-code
+  else
+    test -z "$(command git status --porcelain --ignore-submodules -unormal)"
+  fi
+
+  (( $? )) && echo "${GIT_DIRTY:-*}"
+}
+
+prompt_color_line() {
+  local line="─────" text
+  [[ $? -eq 0 ]] && text="%F{7}$line%f" || text="%F{3}$line%f"
+  print -n " $text "
+}
+
+prompt_setup() {
+  prompt_opts=(subst percent)
+
+  autoload -Uz add-zsh-hook
+  autoload -Uz vcs_info
+  #autoload -Uz async && async
+  autoload -Uz colors && colors
+
+  add-zsh-hook precmd prompt_precmd
+
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:git*' formats ' %b' 'x%R'
+
+  PROMPT=
+
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    PROMPT+="[ %m :: %n ] "
+  fi
+
+  PROMPT+="%F{11}%~ %f
+ $(prompt_color_line) "
+
+  RPROMPT=""
+}
+
+prompt_setup "$@"

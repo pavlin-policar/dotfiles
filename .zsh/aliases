@@ -1,0 +1,30 @@
+#
+# Set up all necessary aliases
+#
+
+# Common
+alias ls='ls -lh --color=auto --group-directories-first'
+alias la='ls -lAh --color=auto --group-directories-first'
+alias .='cd ~'
+alias ..='cd ..'
+alias sudo='sudo -E'
+alias mkdir='mkdir -p'
+alias grep='grep --color=always'
+alias less='less -r'
+alias df='df -h'
+alias ip='ip -c'
+alias watch='watch --color'
+alias dir='dir --color'
+
+# Tmux
+alias tls='tmux ls'
+alias ta='tmux attach'
+alias tat='tmux attach -t'
+alias tns='tmux new-session -s'
+
+# SSH
+alias ssh-add='ssh-add -t 1h'
+
+alias colorpicker='gcolor2'
+
+alias gpustat='watch -n 1 nvidia-smi'
