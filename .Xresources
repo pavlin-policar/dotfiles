@@ -1,0 +1,10 @@
+
+background: #1d1d1d
+
+foreground: #aaaaaa
+foreground_active: #aaaaaa
+foreground_normal: #666666
+foreground_inactive: #333333
+
+accent: #4586FF
+urgent: #E04848

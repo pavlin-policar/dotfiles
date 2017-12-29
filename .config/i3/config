@@ -171,60 +171,26 @@ mode $shutdownMod {
 }
 bindsym $mod+Shift+e mode $shutdownMod
 
-# COLORS
-# Since recursive variables are not supported in the i3 config, we'll keep the
-# used colors here for reference
-#
-# Text color (for the i3 bar and icons)
-# #aaaaaa
-#
-# Dark grey (for i3 bar background color)
-# #272727
-#
-# Medium grey (for i3 bar active workspaces)
-# #333333
-#
-# Medium grey (for i3 bar active workspaces)
-# #393939
-#
-# Red (for alerts)
-# #FF5959
-#
-# Blue (as a main color)
-# #2b63cc
-
-# Bar colors
-set $color_text #aaaaaa
-set $color_bar_background #1d1d1d
-set $window_blue #2B63CC
-
 # General window background (if not overriden)
-set $color_background #272727
-# General window text foreground (if not overriden)
-set $color_inactive #aaaaaa
-# Urgent color for window borders
-set $color_urgent #FF5959
-# Main color
-set $color_main #2b63cc
+set_from_resource $urgent urgent #E04848
+
+set $background #272727
+set_from_resource $color_inactive foreground_active #aaaaaa
+set_from_resource $accent accent #2b63cc
 
 # window border colors
-# class                 Border    Background          Foreground        Indicator
-client.focused          #000000   $color_main        $color_inactive   $color_main
-client.focused_inactive #000000   #555555   $color_inactive   $color_background
-client.unfocused        #000000   #444444   $color_inactive   $color_background
-client.urgent           #000000   $color_urgent       $color_inactive   $color_urgent
-
-set $ws_background #1d1d1d
-set $ws_background_active #393939
-set $ws_background_urgent #FF5983
-set $ws_text_color #aaaaaa
+# class                 Border    Background  Foreground        Indicator
+client.focused          #000000   $accent     $color_inactive   $accent
+client.focused_inactive #000000   #555555     $color_inactive   $color_inactive
+client.unfocused        #000000   #444444     $color_inactive   $color_inactive
+client.urgent           #000000   $urgent     $color_inactive   $urgent
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Borders
-new_window pixel 4
-new_float pixel 4
-hide_edge_borders both
+new_window pixel 5
+new_float pixel 5
+hide_edge_borders none
 
 # disable mouse movement switching window focus
 focus_follows_mouse no

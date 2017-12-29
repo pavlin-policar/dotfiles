@@ -1,10 +1,13 @@
 
 [colors]
-;background=${xrdb:background:#1d1d1d}
-background= #1d1d1d
-text_color=${xrdb:text_color:#aaaaaa}
-blue = #4586FF
-red = #E04848
+background = ${xrdb:background:#1d1d1d}
+foreground = ${xrdb:foreground:#aaaaaa}
+foreground_active = ${xrdb:foreground_active:#aaaaaa}
+foreground_normal = ${xrdb:foreground_normal:#666666}
+foreground_inactive = ${xrdb:foreground_inactive:#333333}
+
+accent = ${xrdb:accent:#4586FF}
+urgent = ${xrdb:urgent:#E04848}
 
 
 [bar/base]
@@ -27,7 +30,7 @@ font-2 = "Font Awesome 5 Free:style=Solid:size=9;0.5"
 height = 28
 
 background = ${colors.background}
-foreground = ${colors.text_color}
+foreground = ${colors.foreground}
 
 modules-center = date
 modules-right = volume xbacklight updates gmail wired-network wireless-network cpu memory temperature battery
@@ -48,7 +51,7 @@ bottom = true
 height = 42
 
 background = #00000000
-foreground = #333333
+foreground = ${colors.foreground_inactive}
 
 line-size = 24
 
@@ -67,18 +70,18 @@ wrapping-scroll = false
 format = <label-state>
 
 label-focused = " %name% "
-label-focused-foreground = #aaa
+label-focused-foreground = ${colors.foreground_active}
 label-focused-padding = 1
 
 label-unfocused = " %name% "
-label-unfocused-foreground = #333
+label-unfocused-foreground = ${colors.foreground_inactive}
 label-unfocused-padding = 1
 
 label-visible = " %name% "
 label-visible-padding = 1
 
 label-urgent = " %name% "
-label-urgent-foreground = ${colors.red}
+label-urgent-foreground = ${colors.urgent}
 label-urgent-padding = 1
 
 
@@ -118,7 +121,7 @@ label =  %temperature-c%
 
 format-warn = <label-warn>
 label-warn =  %temperature-c%
-label-warn-foreground = ${colors.red}
+label-warn-foreground = ${colors.urgent}
 
 
 [module/cpu]
@@ -160,7 +163,7 @@ format-volume =  <label-volume>
 label-volume = %percentage:3%%
 
 label-muted = MUTE
-label-muted-foreground = #66
+label-muted-foreground = ${colors.foreground_normal}
 
 
 [module/xbacklight]
@@ -186,7 +189,7 @@ exec = $HOME/.config/polybar/bin/checkupdates
 interval = 120
 
 format =  <label>
-format-foreground = ${colors.blue}
+format-foreground = ${colors.accent}
 format-padding = 1
 
 label = %output%
@@ -200,7 +203,7 @@ exec = $HOME/.config/polybar/bin/gmail
 interval = 120
 
 format =  <label>
-format-foreground = ${colors.blue}
+format-foreground = ${colors.accent}
 format-padding = 1
 
 label = %output%

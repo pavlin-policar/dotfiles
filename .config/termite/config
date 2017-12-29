@@ -2,8 +2,8 @@
 font = Operator Mono Light 11
 
 [colors]
-foreground      = #CBD1CD
-foreground_bold = #e0e0e0
+foreground      = #eeeeee
+foreground_bold = #ffffff
 cursor          = #e0e0e0
 background      = #262626
 
