@@ -5,7 +5,7 @@
     selected-normal-foreground:  @blue;
     foreground:                  #666666;
     normal-foreground:           @foreground;
-    background:                  rgba(26, 26, 26, 95%);
+    background:                  rgba(26, 26, 26, 99%);
 
     normal-background:           rgba(0, 0, 0, 0%);
     urgent-background:           @normal-background;
