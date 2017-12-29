@@ -25,6 +25,7 @@ alias tns='tmux new-session -s'
 # SSH
 alias ssh-add='ssh-add -t 1h'
 
+# Other useful aliases
+alias ssid='iwgetid -r'
 alias colorpicker='gcolor2'
-
 alias gpustat='watch -n 1 nvidia-smi'
