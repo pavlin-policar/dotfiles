@@ -28,7 +28,7 @@ bindsym $mod+Shift+q kill
 
 # start rofi
 bindsym $mod+d exec --no-startup-id rofi -show run -theme $HOME/.config/rofi/theme.rasi
-bindsym $mod+Tab exec --no-startup-id rofi -show window  -theme $HOME/.config/rofi/theme.rasi
+bindsym $mod+Tab exec --no-startup-id rofi -show window -theme $HOME/.config/rofi/theme.rasi
 
 # change focus
 bindsym $mod+$left focus left
@@ -72,16 +72,16 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 # vars for workspace names
-set $ws1 "1:    "
-set $ws2 "2:    "
-set $ws3 "3:    "
-set $ws4 "4:    "
-set $ws5 "5:    "
-set $ws6 "6:    "
-set $ws7 "7:    "
-set $ws8 "8:    "
-set $ws9 "9:    "
-set $ws10 "10:    "
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:"
+set $ws5 "5:"
+set $ws6 "6:"
+set $ws7 "7:"
+set $ws8 "8:"
+set $ws9 "9:"
+set $ws10 "10:"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -220,34 +220,7 @@ set $ws_background_active #393939
 set $ws_background_urgent #FF5983
 set $ws_text_color #aaaaaa
 
-bar {
-  position top
-  # Enable transparency on i3bar
-  i3bar_command i3bar
-  status_command i3blocks -c ~/.config/i3/i3blocks.conf
-  # Don't display the numbers in front of the text describing the workspace
-  strip_workspace_numbers yes
-  font pango:Source Code Pro, Awesome 9
-
-  height 28
-
-  tray_padding 6
-
-  colors {
-    # bar background color
-    background $color_bar_background
-    # bar text color
-    statusline $color_text
-
-    #                   Border          Background            Foreground
-    # currently focused workspace
-    focused_workspace   $ws_background  $ws_background_active $ws_text_color
-    # when workspace is active on some output but the focus is elsewhere
-    active_workspace    $ws_background  $ws_background        $ws_text_color
-    inactive_workspace  $ws_background  $ws_background        $ws_text_color
-    urgent_workspace    $ws_background  $ws_background        $ws_background_urgent
-  }
-}
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Borders
 new_window pixel 4
@@ -259,7 +232,7 @@ focus_follows_mouse no
 
 # Gaps
 # gaps inner 15
-# gaps outer 5
+gaps outer 10
 
 # Workspace auto back and forth allows me to return to the previous workspace by
 # clicking the same ws number again

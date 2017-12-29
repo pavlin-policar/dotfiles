@@ -4,10 +4,6 @@
 USERNAME="$(secret-tool lookup gmail username | tr -d '\n')"
 PASSWORD="$(secret-tool lookup gmail api_key | tr -d '\n')"
 
-case $BLOCK_BUTTON in
-  1) i3-msg "exec chromium --new-tab www.gmail.com ; workspace 1:    " &>/dev/null ;;
-esac
-
 RESPONSE=$(curl -u "$USERNAME":"$PASSWORD" -s -i "https://mail.google.com/mail/feed/atom")
 
 # If the response was not okay, due to connectivity or anything else, exit
@@ -21,6 +17,4 @@ if [[ "$COUNT" == "0" ]]; then
   exit 0
 fi
 
-echo " $COUNT"
-echo " $COUNT"
-echo "#4586FF"
+echo "$COUNT"

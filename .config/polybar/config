@@ -1,0 +1,208 @@
+
+[colors]
+;background=${xrdb:background:#1d1d1d}
+background= #1d1d1d
+text_color=${xrdb:text_color:#aaaaaa}
+blue = #4586FF
+red = #E04848
+
+
+[bar/base]
+enable-ipc = true
+
+width = 100%
+padding = 2
+module-margin = 2
+
+fixed-center = true
+
+
+[bar/top]
+inherit = bar/base
+
+font-0 = "Operator Mono Book:size=10;0"
+font-1 = "unifont:fontformat=truetype:size=10:antialias=true;0"
+font-2 = "Font Awesome 5 Free:style=Solid:size=9;0.5"
+
+height = 28
+
+background = ${colors.background}
+foreground = ${colors.text_color}
+
+modules-center = date
+modules-right = volume xbacklight updates gmail wired-network wireless-network cpu memory temperature battery
+
+
+[bar/bottom]
+inherit = bar/base
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+font-0 = "Operator Mono Book:size=12;2"
+font-1 = "unifont:fontformat=truetype:size=10:antialias=true;0"
+font-2 = "Font Awesome 5 Free:style=Solid:size=12;0"
+
+bottom = true
+
+height = 42
+
+background = #00000000
+foreground = #333333
+
+line-size = 24
+
+modules-center = i3
+
+
+[module/i3]
+type = internal/i3
+
+strip-wsnumbers = true
+enable-click = true
+enable-scroll = true
+wrapping-scroll = false
+
+; Figure out a way to separate out <label-mode> to own module
+format = <label-state>
+
+label-focused = " %name% "
+label-focused-foreground = #aaa
+label-focused-padding = 1
+
+label-unfocused = " %name% "
+label-unfocused-foreground = #333
+label-unfocused-padding = 1
+
+label-visible = " %name% "
+label-visible-padding = 1
+
+label-urgent = " %name% "
+label-urgent-foreground = ${colors.red}
+label-urgent-padding = 1
+
+
+[module/date]
+type = internal/date
+interval = 1.0
+date = %A, %d %B %H:%M
+
+
+[module/battery]
+type = internal/battery
+
+battery = BAT1
+adapter = ACAD
+
+format-charging = <ramp-capacity> <label-charging>
+label-charging = %percentage:3%%
+
+format-discharging = <ramp-capacity> <label-discharging>
+label-discharging = %percentage:3%%
+
+format-full = <ramp-capacity> <label-full>
+label-full = %percentage:3%%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+
+[module/temperature]
+type = internal/temperature
+
+format = <label>
+label =  %temperature-c%
+
+format-warn = <label-warn>
+label-warn =  %temperature-c%
+label-warn-foreground = ${colors.red}
+
+
+[module/cpu]
+type = internal/cpu
+
+format = <label>
+
+label =  %percentage:3%%
+
+
+[module/memory]
+type = internal/memory
+
+format = <label>
+
+label = RAM %gb_free%
+
+
+[module/wired-network]
+type = internal/network
+interface = enp9s0
+
+
+[module/wireless-network]
+type = internal/network
+interface = wlp8s0
+
+label-connected =  %downspeed:9%  %upspeed:9% 
+
+label-disconnected = not connected
+label-disconnected-foreground = #66ffffff
+
+
+[module/volume]
+type = internal/volume
+
+format-volume =  <label-volume>
+
+label-volume = %percentage:3%%
+
+label-muted = MUTE
+label-muted-foreground = #66
+
+
+[module/xbacklight]
+type = internal/xbacklight
+
+card = intel_backlight
+enable-scroll = true
+
+format = <ramp> <label>
+label = %percentage:3%%
+
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+
+[module/updates]
+type = custom/script
+exec = bin/checkupdates
+; TODO: Execute only if connected to any network
+;exec-if = pgrep -x myservice
+interval = 120
+
+format =  <label>
+format-foreground = ${colors.blue}
+format-padding = 1
+
+label = %output%
+
+
+[module/gmail]
+type = custom/script
+exec = bin/gmail
+; TODO: Execute only if connected to any network
+;exec-if = pgrep -x myservice
+interval = 120
+
+format =  <label>
+format-foreground = ${colors.blue}
+format-padding = 1
+
+label = %output%
+
+; vim:ft=dosini
