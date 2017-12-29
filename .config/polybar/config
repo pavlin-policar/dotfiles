@@ -180,7 +180,7 @@ ramp-4 = 🌑
 
 [module/updates]
 type = custom/script
-exec = bin/checkupdates
+exec = $HOME/.config/polybar/bin/checkupdates
 ; TODO: Execute only if connected to any network
 ;exec-if = pgrep -x myservice
 interval = 120
@@ -194,7 +194,7 @@ label = %output%
 
 [module/gmail]
 type = custom/script
-exec = bin/gmail
+exec = $HOME/.config/polybar/bin/gmail
 ; TODO: Execute only if connected to any network
 ;exec-if = pgrep -x myservice
 interval = 120
