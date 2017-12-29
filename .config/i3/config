@@ -9,13 +9,11 @@ set $down j
 set $left h
 set $right l
 
-# set mod key
-# Alt key     -> Mod1
-# Windows key -> Mod4
+# set mod key: Alt key -> Mod1 | Windows key -> Mod4
 set $mod Mod4
 
 # font for window titles
-font pango:Source Code Pro
+font pango:Operator Mono Light
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -173,8 +171,6 @@ bindsym $mod+Shift+e mode $shutdownMod
 
 # General window background (if not overriden)
 set_from_resource $urgent urgent #E04848
-
-set $background #272727
 set_from_resource $color_inactive foreground_active #aaaaaa
 set_from_resource $accent accent #2b63cc
 
