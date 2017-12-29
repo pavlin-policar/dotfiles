@@ -138,18 +138,18 @@ bindsym $mod+r mode $resize
 
 set $volumeMode "  "
 mode $volumeMode {
-  bindsym 1 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 10% unmute", mode "default"
-  bindsym 2 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 20% unmute", mode "default"
-  bindsym 3 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 30% unmute", mode "default"
-  bindsym 4 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 40% unmute", mode "default"
-  bindsym 5 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 50% unmute", mode "default"
-  bindsym 6 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 60% unmute", mode "default"
-  bindsym 7 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 70% unmute", mode "default"
-  bindsym 8 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 80% unmute", mode "default"
-  bindsym 9 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 90% unmute", mode "default"
-  bindsym 0 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 100% unmute", mode "default"
+  bindsym 1 exec --no-startup-id "amixer -q -D pulse sset Master 10% unmute", mode "default"
+  bindsym 2 exec --no-startup-id "amixer -q -D pulse sset Master 20% unmute", mode "default"
+  bindsym 3 exec --no-startup-id "amixer -q -D pulse sset Master 30% unmute", mode "default"
+  bindsym 4 exec --no-startup-id "amixer -q -D pulse sset Master 40% unmute", mode "default"
+  bindsym 5 exec --no-startup-id "amixer -q -D pulse sset Master 50% unmute", mode "default"
+  bindsym 6 exec --no-startup-id "amixer -q -D pulse sset Master 60% unmute", mode "default"
+  bindsym 7 exec --no-startup-id "amixer -q -D pulse sset Master 70% unmute", mode "default"
+  bindsym 8 exec --no-startup-id "amixer -q -D pulse sset Master 80% unmute", mode "default"
+  bindsym 9 exec --no-startup-id "amixer -q -D pulse sset Master 90% unmute", mode "default"
+  bindsym 0 exec --no-startup-id "amixer -q -D pulse sset Master 100% unmute", mode "default"
 
-  bindsym m exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master mute", mode "default"
+  bindsym m exec --no-startup-id "amixer -q -D pulse sset Master mute", mode "default"
 
   bindsym Escape mode "default"
 }
@@ -238,12 +238,12 @@ gaps outer 10
 # workspace_auto_back_and_forth yes
 
 # Volume keys
-bindsym XF86AudioRaiseVolume exec "pkill -RTMIN+1 i3blocks; amixer -D pulse sset Master 1%+ unmute"
-bindsym XF86AudioLowerVolume exec "pkill -RTMIN+1 i3blocks; amixer -D pulse sset Master 1%- unmute"
+bindsym XF86AudioRaiseVolume exec "amixer -D pulse sset Master 1%+ unmute"
+bindsym XF86AudioLowerVolume exec "amixer -D pulse sset Master 1%- unmute"
 
 # Brightness keys
-bindsym XF86MonBrightnessUp exec "pkill -RTMIN+2 i3blocks; light -A 10"
-bindsym XF86MonBrightnessDown exec "pkill -RTMIN+2 i3blocks; light -U 10"
+bindsym XF86MonBrightnessUp exec "light -A 10"
+bindsym XF86MonBrightnessDown exec "light -U 10"
 
 # Assign programs to specific workspaces
 assign [class="(?i)chromium"] $ws1
@@ -272,7 +272,7 @@ for_window [class="Tk"] floating enable
 for_window [class="octave" title="^Figure.*"] floating enable
 
 
-# i3blocks termite update script
+# termite update script
 for_window [class="Update"] floating enable, resize set 840 420, move absolute position 980 px 100 px
 
 # Signal to the systemd that i3 has started up
