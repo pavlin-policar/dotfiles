@@ -15,7 +15,7 @@ set $right l
 set $mod Mod4
 
 # font for window titles
-font pango:Source Code Pro, Awesome 9
+font pango:Source Code Pro
 
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -27,8 +27,8 @@ bindsym $mod+Return exec termite
 bindsym $mod+Shift+q kill
 
 # start rofi
-bindsym $mod+d exec --no-startup-id rofi -show run -theme $HOME/.config/rofi/theme.rasi
-bindsym $mod+Tab exec --no-startup-id rofi -show window -theme $HOME/.config/rofi/theme.rasi
+bindsym $mod+d exec --no-startup-id rofi -show run -matching fuzzy -theme $HOME/.config/rofi/theme.rasi
+bindsym $mod+Tab exec --no-startup-id rofi -show window -matching fuzzy -theme $HOME/.config/rofi/theme.rasi
 
 # change focus
 bindsym $mod+$left focus left

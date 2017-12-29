@@ -39,6 +39,7 @@
     background-color: @background;
     border:           0;
     padding:          300 450;
+    fullscreen: true;
 }
 #mainbox {
     border:  0;
