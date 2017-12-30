@@ -1,0 +1,15 @@
+# file /etc/systemd/system/lock.service
+
+[Unit]
+Description=i3 Screen Lock
+Before=sleep.target
+
+[Service]
+Type=simple
+User=%i
+Environment=DISPLAY=:0
+ExecStart=/home/pavlin/dotfiles/bin/lock
+
+[Install]
+WantedBy=sleep.target
+WantedBy=suspend.target

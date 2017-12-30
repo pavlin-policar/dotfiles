@@ -1,6 +1,7 @@
 #!/bin/bash
 
 i3lock \
+  -n \
   -i /home/pavlin/dotfiles/pictures/lockscreen.png \
   \
   --timestr="%H:%M" \
