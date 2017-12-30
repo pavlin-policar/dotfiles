@@ -35,10 +35,10 @@ bindsym $mod+$up focus up
 bindsym $mod+$right focus right
 
 # move focused window
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
-bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+$left move left 50 px
+bindsym $mod+Shift+$down move down 50 px
+bindsym $mod+Shift+$up move up 50 px
+bindsym $mod+Shift+$right move right 50 px
 
 # split in horizontal orientation
 bindsym $mod+b split h
@@ -109,30 +109,10 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym Print exec gyazo
 
 # resize window (you can also use the mouse for that)
-set $resize "  "
-mode $resize {
-  # These bindings trigger as soon as you enter the resize mode
-
-  # Pressing left will shrink the window’s width.
-  # Pressing right will grow the window’s width.
-  # Pressing up will shrink the window’s height.
-  # Pressing down will grow the window’s height.
-  bindsym $left       resize shrink width 10 px or 10 ppt
-  bindsym $down       resize grow height 10 px or 10 ppt
-  bindsym $up         resize shrink height 10 px or 10 ppt
-  bindsym $right      resize grow width 10 px or 10 ppt
-
-  # same bindings, but for the arrow keys
-  bindsym Left        resize shrink width 10 px or 10 ppt
-  bindsym Down        resize grow height 10 px or 10 ppt
-  bindsym Up          resize shrink height 10 px or 10 ppt
-  bindsym Right       resize grow width 10 px or 10 ppt
-
-  # back to normal: Enter or Escape
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
-bindsym $mod+r mode $resize
+bindsym $mod+Shift+u resize shrink width 50 px or 50 ppt
+bindsym $mod+Shift+i resize grow height 50 px or 50 ppt
+bindsym $mod+Shift+o resize shrink height 50 px or 50 ppt
+bindsym $mod+Shift+p resize grow width 50 px or 50 ppt
 
 set $volumeMode "  "
 mode $volumeMode {
