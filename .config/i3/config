@@ -187,6 +187,9 @@ bindsym XF86AudioLowerVolume exec "amixer -D pulse sset Master 1%- unmute"
 bindsym XF86MonBrightnessUp exec "light -A 10"
 bindsym XF86MonBrightnessDown exec "light -U 10"
 
+# Touchpad
+bindsym XF86TouchpadToggle exec "synclient TouchpadOff=$(synclient | awk '/TouchpadOff/ {print ($3+1)%2}')"
+
 # Assign programs to specific workspaces
 assign [class="(?i)chromium"] $ws1
 assign [class="(?i)PhpStorm"] $ws3
