@@ -22,7 +22,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'vim-scripts/matchit.zip'
 
 " Linters, syntax checkers, etc...
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 
 " Makes JSON sane
 Plugin 'elzr/vim-json'
