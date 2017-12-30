@@ -1,9 +1,12 @@
 #!/usr/bin/python
-import re
-import subprocess
+import os
+import pickle
 import sys
 from argparse import ArgumentParser
 from os.path import join, isdir, expanduser
+from typing import Dict
+
+from youtube_dl import YoutubeDL
 
 PLAYLISTS = {
     '2014': 'PLvExg6gsBjAccJ7o4HpDptNlsxDN27rCL',
@@ -14,34 +17,7 @@ PLAYLISTS = {
 PLAYLISTS_DIR = join('~', 'Music')
 
 
-def __num_total_videos(playlist_name):
-    cmd = ['youtube-dl', '--flat-playlist', PLAYLISTS[playlist_name]]
-
-    output = subprocess.check_output(cmd)
-    # We get a bytes-like object separated by \n
-    output = str(output).split('\\n')
-
-    # Find the entry that states the number of videos in playlist
-    pattern = re.compile(r'Downloading (\d+) videos', flags=re.IGNORECASE)
-    for string in output:
-        match = re.search(pattern, string)
-        if match:
-            return int(match.group(1))
-    # If we weren't able to find the correct line, the output may have changed
-    else:
-        raise RuntimeError(
-            'Was not able to get number of total songs. Has the output of '
-            '`youtube-dl` changed?'
-        )
-
-
-def __cleanup_parts(directory):
-    """Remove any leftover *.fxx.* video files from directory."""
-    # find . -name '*.f*.*' -delete
-    subprocess.call(['find', directory, '-name', '*.f*.*', '-delete'])
-
-
-def __print_progress(current_idx, total_songs, song_title):
+def _print_progress(current_idx, total_songs, song_title):
     # Clear the line from the previous download
     sys.stdout.write('\r' + ' ' * 80)
     sys.stdout.flush()
@@ -52,74 +28,152 @@ def __print_progress(current_idx, total_songs, song_title):
     sys.stdout.flush()
 
 
-def fetch(playlist_name, directory, **_):
-    # Specify the `youtube-dl` output format
-    output_format = '%(playlist)s/%(title)s.%(ext)s'
-    output_path = join(directory, output_format)
+class Playlist:
+    DATA_FILE_NAME = 'data.p'
 
-    cmd = [
-        'youtube-dl',
-        # Continue on download errors
-        '--ignore-errors',
-        '-o', output_path,
-        # Keep the downloaded video files, so it does not re-download them
-        # again when running a second time
-        '--keep-video',
-        # Do not overwrite the already downloaded video files, simply skip
-        # download
-        '--no-overwrites',
-        '--extract-audio',
-        '--audio-format', 'mp3',
-        # Do not overwrite the extracted audio files
-        '--no-post-overwrites',
-        PLAYLISTS[playlist_name],
-    ]
+    def __init__(self, playlist_info: Dict, directory: str, ytl: YoutubeDL):
+        self.id = playlist_info['id']
+        self.name = playlist_info['title']
+        self.uploader = playlist_info['uploader']
+        self.directory = join(directory, self.name)
+        self.data_file = join(self.directory, self.DATA_FILE_NAME)
 
-    # NOTE: These regexes are heavily dependent on the output of `youtube-dl`
-    download_progress = re.compile(
-        r'video (\d+) of (\d+)', flags=re.IGNORECASE
-    )
-    # TODO: This does not work when the title contains a dot
-    # NOTE: This matches the `part` files, however this is not an issue, since
-    # the title remains the same and the contents of the previous match is
-    # overridden. The same is true for the `already_downloaded` pattern.
-    title = re.compile(
-        r'\[download\] Destination:.*\/(.+?)\.', flags=re.IGNORECASE
-    )
-    already_downloaded = re.compile(
-        r'\[download\].*\/(.+?)\..*has already been', flags=re.IGNORECASE
-    )
+        self._upstream_data = {
+            entry['id']: Song(entry, ytl, playlist=self)
+            for entry in playlist_info['entries']
+        }
+        self._local_data = {}
 
-    with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as process:
-        for line in iter(process.stdout.readline, ''):
-            # Line is read as bytes, so we need to convert to string before any
-            # kind of manipulation
-            line = line.decode('utf-8')
+        self.__ytl = ytl
 
-            download_status_match = re.search(download_progress, line)
-            if download_status_match:
-                current_idx = int(download_status_match.group(1))
-                total_songs = int(download_status_match.group(2))
+        # Attempt to read pickled list of song data from fs, otherwise assume
+        # no songs have been downloaded
+        try:
+            with open(self.data_file, 'rb') as file:
+                loaded_data = pickle.load(file)
+                # Check that the loaded playlist is the same as this one
+                assert loaded_data['id'] == self.id
+                assert loaded_data['name'] == self.name
+                self._local_data = {
+                    song_id: Song.from_info(
+                        loaded_data['songs'][song_id], ytl, playlist=self
+                    )
+                    for song_id in loaded_data['songs']
+                }
+        except FileNotFoundError:
+            pass
+        except (EOFError, TypeError):
+            # If the data is corrupt, there's nothing we can do, so remove it
+            os.remove(self.data_file)
 
-            title_match = re.search(title, line)
-            already_downloaded_match = re.search(already_downloaded, line)
-            if title_match or already_downloaded_match:
-                song_title = title_match.group(1) if title_match \
-                    else already_downloaded_match.group(1)
-                # We notify the user of the currently being downloaded song
-                __print_progress(current_idx, total_songs, song_title)
+        self.__local_ids = set(self._local_data.keys())
+        self.__upstream_ids = set(self._upstream_data.keys())
+
+        self.__synced_song_ids = self.__upstream_ids & self.__local_ids
+        self.__to_remove_song_ids = self.__local_ids - self.__upstream_ids
+        self.__to_download_song_ids = self.__upstream_ids - self.__local_ids
+
+    @property
+    def synced(self):
+        return [self._local_data[song_id] for song_id in self._local_data
+                if song_id in self.__synced_song_ids]
+
+    @property
+    def to_remove(self):
+        return [self._local_data[song_id] for song_id in self._local_data
+                if song_id in self.__to_remove_song_ids]
+
+    @property
+    def to_download(self):
+        return [self._upstream_data[song_id] for song_id in self._upstream_data
+                if song_id in self.__to_download_song_ids]
+
+    def sync(self):
+        for idx, song in enumerate(self.to_download):
+            _print_progress(idx + 1, len(self.to_download), song.title)
+            song.download()
+            self._local_data[song.id] = song
+
+            with open(self.data_file, 'wb') as file:
+                pickle.dump(self.info(), file)
+
+    def info(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'songs': {
+                song_id: self._local_data[song_id].info()
+                for song_id in self._local_data
+            },
+        }
 
 
-def __main():
-    # Register the supported actions
-    actions = {'fetch': fetch}
+class Song:
+    def __init__(self, song_info: Dict, ytl: YoutubeDL, playlist: Playlist = None):
+        self.id = song_info['id']
+        self.title = song_info['title']
+        self.url = song_info['url']
+        self.playlist = playlist
 
+        self.__data = song_info
+        self.__ytl = ytl
+
+    def download(self):
+        info_extractor = self.__ytl.get_info_extractor(self.__data['ie_key'])
+
+        assert info_extractor.suitable(self.url), \
+            'Info extractor is not suitable for song %s' % self.url
+
+        ie_result = info_extractor.extract(self.url)
+
+        if self.playlist:
+            self.__ytl.add_extra_info(ie_result, {'playlist': self.playlist.name})
+
+        self.__ytl.process_video_result(ie_result, download=True)
+
+    def info(self):
+        return {'id': self.id, 'title': self.title, 'url': self.url}
+
+    @classmethod
+    def from_info(cls, info: Dict, ytl: YoutubeDL, playlist: Playlist = None):
+        return cls(info, ytl, playlist)
+
+
+def sync(playlist):
+    playlist.sync()
+
+
+def check(playlist):
+    print('%s by %s' % (playlist.name, playlist.uploader))
+    print('Synced songs: %d' % len(playlist.synced))
+    print('Songs to remove: %d' % len(playlist.to_remove))
+    print('Songs to download: %d' % len(playlist.to_download))
+
+
+def __get_playlist_info(ytl, playlist_name):
+    """Extract the relevant playlist info to be used."""
+    ie = ytl.get_info_extractor('YoutubePlaylist')
+    playlist_url = PLAYLISTS[playlist_name]
+
+    assert ie.suitable(playlist_url), \
+        'The info extractor is not suitable for the given URL. Are you sure ' \
+        'you provided a valid playlist id?'
+
+    playlist_info = ie.extract(playlist_url)
+    playlist_info['entries'] = list(playlist_info['entries'])
+    return playlist_info
+
+
+ACTIONS = {'sync': sync, 'check': check}
+
+
+def __parse_arguments():
     parser = ArgumentParser(
         description='Keep your local music playlist synchronized with your '
                     'youtube playlists.',
     )
     parser.add_argument(
-        'action', metavar='action', type=str, choices=actions.keys(),
+        'action', metavar='action', type=str, choices=ACTIONS.keys(),
         help='action to perform',
     )
     parser.add_argument(
@@ -136,7 +190,26 @@ def __main():
     args.dir = expanduser(args.dir)
     assert isdir(args.dir), 'The path specified is not a valid directory!'
 
-    actions[args.action](args.name, directory=args.dir)
+    return args
+
+
+def __main():
+    args = __parse_arguments()
+
+    ytl = YoutubeDL({
+        # 'quiet': True,
+        'outtmpl': join(args.dir, '%(playlist)s/%(title)s.%(ext)s'),
+        'nooverwrites': True,
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+        }]
+    })
+
+    playlist_info = __get_playlist_info(ytl, args.name)
+    playlist = Playlist(playlist_info, args.dir, ytl)
+
+    ACTIONS[args.action](playlist)
 
 
 if __name__ == '__main__':
