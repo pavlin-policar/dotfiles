@@ -129,7 +129,7 @@ type = internal/cpu
 
 format = <label>
 
-label =  %percentage:3%%
+label =  %percentage:2%%
 
 
 [module/memory]
