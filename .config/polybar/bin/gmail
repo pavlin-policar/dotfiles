@@ -8,14 +8,14 @@ RESPONSE=$(curl -u "$USERNAME":"$PASSWORD" -s -i "https://mail.google.com/mail/f
 
 # If the response was not okay, due to connectivity or anything else, exit
 if [[ $(echo $RESPONSE | grep 'HTTP' | cut -d" " -f2) != "200" ]]; then
-  echo -n "";
+  echo "";
   exit 0;
 fi
 
 COUNT=$(echo $RESPONSE | grep -oPm1 "(?<=<fullcount>)[^<]+")
 
 if [[ "$COUNT" == "0" ]]; then
-  echo -n "";
+  echo "";
   exit 0
 fi
 

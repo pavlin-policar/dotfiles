@@ -3,8 +3,9 @@
 # Prefer pacaur over checkupdates since pacaur also lists outdated packages in
 # the aur, unlike checkupdates.
 UPDATES="$(( $(checkupdates | wc -l) + $(checkupdates-aur | wc -l) ))"
+
 if [[ "$UPDATES" = "0" ]]; then
-  echo -n "";
+  echo "";
 else
-  echo -n "$UPDATES"
+  echo "$UPDATES"
 fi;

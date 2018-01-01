@@ -149,7 +149,7 @@ interface = enp9s0
 type = internal/network
 interface = wlp8s0
 
-label-connected =  %downspeed:9%  %upspeed:9% 
+label-connected =  %downspeed:8%  %upspeed:8% 
 
 label-disconnected = not connected
 label-disconnected-foreground = #66ffffff
