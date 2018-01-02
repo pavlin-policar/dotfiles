@@ -213,7 +213,7 @@ exec = $HOME/.config/polybar/bin/yt-playlist 2018
 click-left = termite -t Update -e "zsh -c \"youtube-playlist sync 2018\"" &
 ; TODO: Execute only if connected to any network
 ;exec-if = pgrep -x myservice
-interval = 1800
+interval = 120
 
 format =  <label>
 format-foreground = ${colors.accent}
