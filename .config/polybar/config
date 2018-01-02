@@ -188,7 +188,7 @@ exec = $HOME/.config/polybar/bin/checkupdates
 ;exec-if = pgrep -x myservice
 interval = 120
 
-click-left = termite -t Update -e "zsh -c \"pacaur -Syu\""
+click-left = termite -t Update -e "zsh -c \"pacaur -Syu\"" &
 
 format =  <label>
 format-foreground = ${colors.accent}
