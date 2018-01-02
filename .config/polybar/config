@@ -9,7 +9,6 @@ foreground_inactive = ${xrdb:foreground_inactive:#333333}
 accent = ${xrdb:accent:#4586FF}
 urgent = ${xrdb:urgent:#E04848}
 
-
 [bar/base]
 enable-ipc = true
 
@@ -33,12 +32,11 @@ background = ${colors.background}
 foreground = ${colors.foreground}
 
 modules-center = date
-modules-right = volume xbacklight updates gmail wired-network wireless-network cpu memory temperature battery
+modules-right = volume xbacklight updates gmail yt-playlist wired-network wireless-network cpu memory temperature battery
 
 
 [bar/bottom]
 inherit = bar/base
-
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
 
@@ -192,7 +190,6 @@ click-left = termite -t Update -e "zsh -c \"pacaur -Syu\"" &
 
 format =  <label>
 format-foreground = ${colors.accent}
-format-padding = 1
 
 label = %output%
 
@@ -206,7 +203,20 @@ interval = 120
 
 format =  <label>
 format-foreground = ${colors.accent}
-format-padding = 1
+
+label = %output%
+
+
+[module/yt-playlist]
+type = custom/script
+exec = $HOME/.config/polybar/bin/yt-playlist 2018
+click-left = termite -t Update -e "zsh -c \"youtube-playlist sync 2018\"" &
+; TODO: Execute only if connected to any network
+;exec-if = pgrep -x myservice
+interval = 1800
+
+format =  <label>
+format-foreground = ${colors.accent}
 
 label = %output%
 
