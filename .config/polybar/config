@@ -13,8 +13,8 @@ urgent = ${xrdb:urgent:#E04848}
 enable-ipc = true
 
 width = 100%
-padding = 2
-module-margin = 2
+padding = 1
+module-margin = 1
 
 fixed-center = true
 
