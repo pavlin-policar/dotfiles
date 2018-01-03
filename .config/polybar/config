@@ -182,8 +182,7 @@ ramp-4 = 🌑
 [module/updates]
 type = custom/script
 exec = $HOME/.config/polybar/bin/checkupdates
-; TODO: Execute only if connected to any network
-;exec-if = pgrep -x myservice
+exec-if = am-connected
 interval = 120
 
 click-left = termite -t Update -e "zsh -c \"pacaur -Syu\"" &
@@ -197,8 +196,7 @@ label = %output%
 [module/gmail]
 type = custom/script
 exec = $HOME/.config/polybar/bin/gmail
-; TODO: Execute only if connected to any network
-;exec-if = pgrep -x myservice
+exec-if = am-connected
 interval = 120
 
 format =  <label>
@@ -211,8 +209,7 @@ label = %output%
 type = custom/script
 exec = $HOME/.config/polybar/bin/yt-playlist 2018
 click-left = termite -t Update -e "zsh -c \"youtube-playlist sync 2018\"" &
-; TODO: Execute only if connected to any network
-;exec-if = pgrep -x myservice
+exec-if = am-connected
 interval = 120
 
 format =  <label>
