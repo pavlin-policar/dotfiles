@@ -182,7 +182,7 @@ ramp-4 = 🌑
 [module/updates]
 type = custom/script
 exec = $HOME/.config/polybar/bin/checkupdates
-exec-if = am-connected
+exec-if = $HOME/dotfiles/bin/am-connected
 interval = 120
 
 click-left = termite -t Update -e "zsh -c \"pacaur -Syu\"" &
@@ -196,7 +196,7 @@ label = %output%
 [module/gmail]
 type = custom/script
 exec = $HOME/.config/polybar/bin/gmail
-exec-if = am-connected
+exec-if = $HOME/dotfiles/bin/am-connected
 interval = 120
 
 format =  <label>
@@ -209,7 +209,7 @@ label = %output%
 type = custom/script
 exec = $HOME/.config/polybar/bin/yt-playlist 2018
 click-left = termite -t Update -e "zsh -c \"youtube-playlist sync 2018\"" &
-exec-if = am-connected
+exec-if = $HOME/dotfiles/bin/am-connected
 interval = 120
 
 format =  <label>
