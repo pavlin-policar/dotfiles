@@ -1,0 +1,11 @@
+[Unit]
+Description=Redshift display colour temperature adjustment
+Documentation=http://jonls.dk/redshift/
+
+[Service]
+ExecStart=/usr/bin/redshift
+Restart=always
+Environment=DISPLAY=:0
+
+[Install]
+WantedBy=i3.target
