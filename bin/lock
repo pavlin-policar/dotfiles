@@ -8,7 +8,7 @@ i3lock \
   --timesize="48" \
   --time-align="1" \
   --timecolor="ffffffff" \
-  --datestr "%A, %d %B %Y" \
+  --datestr "%A, %d %B" \
   --datefont="Operator Mono Light" \
   --datesize="32" \
   --date-align="1" \
