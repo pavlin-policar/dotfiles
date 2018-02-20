@@ -24,7 +24,7 @@ inherit = bar/base
 
 font-0 = "Operator Mono Book:size=10;0"
 font-1 = "unifont:fontformat=truetype:size=10:antialias=true;1"
-font-2 = "Font Awesome 5 Free:style=Solid:size=10;1"
+font-2 = "Font Awesome:style=Solid:size=10;1"
 
 height = 28
 
@@ -42,7 +42,7 @@ scroll-down = i3wm-wsprev
 
 font-0 = "Operator Mono Book:size=12;2"
 font-1 = "unifont:fontformat=truetype:size=10:antialias=true;0"
-font-2 = "Font Awesome 5 Free:style=Solid:size=12;0"
+font-2 = "Font Awesome:style=Solid:size=14;1"
 
 bottom = true
 
