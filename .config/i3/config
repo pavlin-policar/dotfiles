@@ -218,7 +218,7 @@ for_window [class="octave" title="^Figure.*"] floating enable
 
 
 # termite update script
-for_window [title="Update"] floating enable, resize set 840 420, move absolute position 980 px 100 px
+for_window [title="^Update$"] floating enable, resize set 840 420, move absolute position 980 px 100 px
 
 # Signal to the systemd that i3 has started up
 exec --no-startup-id systemctl --user start i3.target
