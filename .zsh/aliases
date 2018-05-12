@@ -29,3 +29,6 @@ alias ssh-add='ssh-add -t 1h'
 alias ssid='iwgetid -r'
 alias colorpicker='gcolor2'
 alias gpustat='watch -n 1 nvidia-smi'
+
+# Aurman
+alias aurman='aurman --color auto --cachedir /home/pavlin/.cache/aurman'
