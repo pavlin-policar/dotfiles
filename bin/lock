@@ -4,12 +4,12 @@ i3lock \
   -i /home/pavlin/dotfiles/pictures/lockscreen.png \
   \
   --timestr="%H:%M" \
-  --timefont="Operator Mono Light" \
+  --time-font="Operator Mono Light" \
   --timesize="48" \
   --time-align="1" \
   --timecolor="ffffffff" \
   --datestr "%A, %d %B" \
-  --datefont="Operator Mono Light" \
+  --date-font="Operator Mono Light" \
   --datesize="32" \
   --date-align="1" \
   --datecolor="ffffff99" \
@@ -37,5 +37,5 @@ i3lock \
   --line-uses-inside \
   --veriftext="" \
   --wrongtext="" \
-  --textcolor="ffffffff" \
   --ignore-empty-password
+
