@@ -116,18 +116,18 @@ bindsym $mod+Shift+p resize grow width 50 px or 50 ppt
 
 set $volumeMode "  "
 mode $volumeMode {
-  bindsym 1 exec --no-startup-id "amixer -q -D pulse sset Master 10% unmute", mode "default"
-  bindsym 2 exec --no-startup-id "amixer -q -D pulse sset Master 20% unmute", mode "default"
-  bindsym 3 exec --no-startup-id "amixer -q -D pulse sset Master 30% unmute", mode "default"
-  bindsym 4 exec --no-startup-id "amixer -q -D pulse sset Master 40% unmute", mode "default"
-  bindsym 5 exec --no-startup-id "amixer -q -D pulse sset Master 50% unmute", mode "default"
-  bindsym 6 exec --no-startup-id "amixer -q -D pulse sset Master 60% unmute", mode "default"
-  bindsym 7 exec --no-startup-id "amixer -q -D pulse sset Master 70% unmute", mode "default"
-  bindsym 8 exec --no-startup-id "amixer -q -D pulse sset Master 80% unmute", mode "default"
-  bindsym 9 exec --no-startup-id "amixer -q -D pulse sset Master 90% unmute", mode "default"
-  bindsym 0 exec --no-startup-id "amixer -q -D pulse sset Master 100% unmute", mode "default"
+  bindsym 1 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 10% unmute", mode "default"
+  bindsym 2 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 20% unmute", mode "default"
+  bindsym 3 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 30% unmute", mode "default"
+  bindsym 4 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 40% unmute", mode "default"
+  bindsym 5 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 50% unmute", mode "default"
+  bindsym 6 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 60% unmute", mode "default"
+  bindsym 7 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 70% unmute", mode "default"
+  bindsym 8 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 80% unmute", mode "default"
+  bindsym 9 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 90% unmute", mode "default"
+  bindsym 0 exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master 100% unmute", mode "default"
 
-  bindsym m exec --no-startup-id "amixer -q -D pulse sset Master mute", mode "default"
+  bindsym m exec --no-startup-id "pkill -RTMIN+1 i3blocks; amixer -q -D pulse sset Master mute", mode "default"
 
   bindsym Escape mode "default"
 }
@@ -161,31 +161,61 @@ client.focused_inactive #000000   #555555     $color_inactive   $color_inactive
 client.unfocused        #000000   #444444     $color_inactive   $color_inactive
 client.urgent           #000000   $urgent     $color_inactive   $urgent
 
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+bar {
+  position top
+  i3bar_command i3bar
+  status_command i3blocks -c ~/.config/i3/i3blocks.conf
+
+  # Don't display the numbers in front of the text describing the workspace
+  strip_workspace_numbers yes
+
+  font pango:Operator Mono Book, Awesome 9
+
+  height 28
+
+  tray_output none
+
+  colors {
+    # bar background color
+    background #1d1d1d
+    # bar text color
+    statusline #aaaaaa
+
+    #                   Border          Background     Foreground
+    # currently focused workspace
+    focused_workspace   #1d1d1d         #393939        #aaaaaa
+    # when workspace is active on some output but the focus is elsewhere
+    active_workspace    #1d1d1d         #1d1d1d        #aaaaaa
+    inactive_workspace  #1d1d1d         #1d1d1d        #aaaaaa
+    urgent_workspace    #1d1d1d         #1d1d1d        #FF5983
+  }
+}
 
 # Borders
 new_window pixel 5
 new_float pixel 5
-hide_edge_borders none
+hide_edge_borders smart
 
 # disable mouse movement switching window focus
 focus_follows_mouse no
 
 # Gaps
 # gaps inner 15
-gaps outer 10
+# gaps outer 10
 
 # Workspace auto back and forth allows me to return to the previous workspace by
 # clicking the same ws number again
 # workspace_auto_back_and_forth yes
 
 # Volume keys
-bindsym XF86AudioRaiseVolume exec "amixer -D pulse sset Master 1%+ unmute"
-bindsym XF86AudioLowerVolume exec "amixer -D pulse sset Master 1%- unmute"
+bindsym XF86AudioRaiseVolume exec "pkill -RTMIN+1 i3blocks; amixer -D pulse sset Master 1%+ unmute"
+bindsym XF86AudioLowerVolume exec "pkill -RTMIN+1 i3blocks; amixer -D pulse sset Master 1%- unmute"
 
 # Brightness keys
-bindsym XF86MonBrightnessUp exec "light -A 10"
-bindsym XF86MonBrightnessDown exec "light -U 10"
+bindsym XF86MonBrightnessUp exec "pkill -RTMIN+2 i3blocks; light -A 10"
+bindsym XF86MonBrightnessDown exec "pkill -RTMIN+2 i3blocks; light -U 10"
 
 # Touchpad
 bindsym XF86TouchpadToggle exec "synclient TouchpadOff=$(synclient | awk '/TouchpadOff/ {print ($3+1)%2}')"
