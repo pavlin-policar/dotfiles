@@ -1,0 +1,17 @@
+#!/bin/bash
+
+case $BLOCK_BUTTON in
+  1) termite -t Update -e "zsh -c \"youtube-playlist sync 2018\"" & ;;
+esac
+
+# Make sure we're connected to the internet, otherwise we'll be waiting for the
+# timeout
+[[ $(am-connected) = "no" ]] && exit 0
+
+# Check the number of tracks we need to sync
+UPDATES="$(youtube-playlist needs-sync 2018)"
+[[ "$UPDATES" = "0" ]] && exit 0
+
+echo " $UPDATES"
+echo " $UPDATES"
+echo "#4586FF"
