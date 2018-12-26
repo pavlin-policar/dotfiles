@@ -1,0 +1,35 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use v5.10;
+use experimental qw(smartmatch);
+
+
+# Find touchpad ID
+qx/xinput list/ =~ /touchpad.*id=(\d+)/i or die("Touchpad not found!");
+my $touch_id = $1;
+
+# We accept a comand line option: on | off | toggle | <auto>
+given ($ARGV[0]) {
+
+  # Typical on/off commands
+  when ("on") { qx/xinput enable $touch_id/; }
+  when ("off") { qx/xinput disable $touch_id/; }
+
+  # Allow toggling between touchpad on/off states
+  when ("toggle") {
+    qx/xinput list-props $touch_id/ =~ /Device Enabled.*(\d)/;
+    my $command = $1 ? "disable" : "enable";
+    qx/xinput $command $touch_id/;
+  }
+
+  # By default, we'll disable the touchpad if a mouse is connected
+  default {
+    # Check whether or not a mouse is connected
+    my $has_mouse = qx/xinput list/ =~ /mouse.*id=(\d+)/i;
+    my $command = $has_mouse ? "disable" : "enable";
+
+    qx/xinput $command $touch_id/;
+  }
+}
