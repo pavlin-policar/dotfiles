@@ -161,7 +161,6 @@ client.focused_inactive #000000   #555555     $color_inactive   $color_inactive
 client.unfocused        #000000   #444444     $color_inactive   $color_inactive
 client.urgent           #000000   $urgent     $color_inactive   $urgent
 
-#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 bar {
   position top
@@ -218,19 +217,17 @@ bindsym XF86MonBrightnessUp exec "pkill -RTMIN+2 i3blocks; light -A 10"
 bindsym XF86MonBrightnessDown exec "pkill -RTMIN+2 i3blocks; light -U 10"
 
 # Touchpad
-bindsym XF86TouchpadToggle exec "synclient TouchpadOff=$(synclient | awk '/TouchpadOff/ {print ($3+1)%2}')"
+bindsym XF86TouchpadToggle exec "configure-mouse toggle"
 
 # Assign programs to specific workspaces
 assign [class="(?i)chromium"] $ws1
 assign [class="(?i)PhpStorm"] $ws3
 assign [class="(?i)PyCharm"] $ws3
 assign [class="(?i)jetbrains\-idea"] $ws3
-assign [class="atom"] $ws3
 assign [class="(?i)thunar"] $ws5
 assign [class="(?i)skype"] $ws8
 assign [class="(?i)transmission\-gtk"] $ws9
 assign [class="(?i)slack"] $ws8
-assign [class="(?i)nylas mail"] $ws7
 
 # Splash screens should not have a border around them and should be floating
 for_window [window_type="splash"] floating enable border none

@@ -2,7 +2,7 @@
 
 # The case block must be in front of the checkupdates since that takes time
 case $BLOCK_BUTTON in
-  1) termite --class=Update --exec "zsh -c \"pacaur -Syu\"" ;;
+  1) termite -t Update -e "zsh -c \"aurman -Syu\"" & ;;
 esac
 
 # Prefer pacaur over checkupdates since pacaur also lists outdated packages in
