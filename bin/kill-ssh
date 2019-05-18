@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [[ -z $1 ]]; then
+  echo "Please provide a port";
+  exit 1;
+fi;
+
+# Kill the process running on a given port
+CMD="$(ps ux | grep "ssh.*:$1" | grep -v grep)";
+
+if [[ -z $CMD ]]; then
+  echo "No connection open on port $1";
+  exit 0;
+fi;
+
+PID="$(echo $CMD | awk '{print $2}')";
+HOST="$(echo $CMD | awk '{print $11}')";
+
+echo "Killing connection to $HOST on port $1";
+kill $PID;
+
